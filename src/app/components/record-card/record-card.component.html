@@ -1,0 +1,27 @@
+<div class="card" style="width: 100%; width: 18rem;">
+  <ngb-carousel>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [src]="peca1" alt="Imagem peça 1" style="width: 100%; height: auto;" />
+      </div>
+      <div class="carousel-caption">
+        <h3 style="color: azure; font-weight: 600;">Peça 1</h3>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img [src]="peca2" alt="Imagem peça 2" style="width: 100%; height: auto;" />
+      </div>
+      <div class="carousel-caption">
+        <h3>Peça 2</h3>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+
+  <div class="card-body">
+    <h5 class="card-title">05-01-2024</h5>
+    <p class="card-text">Matrícula: 1234567890</p>
+    <p class="card-text">Desenho do motor: 1234567890</p>
+    <a class="btn btn-primary" (click)="generatePDF()">Exportar relatório</a>
+  </div>
+</div>

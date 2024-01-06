@@ -1,0 +1,10 @@
+.container-lg {
+  margin-top: 7vh;
+  min-width: 90vw;
+}
+
+@media screen and (max-width: 1400px) {
+  body {
+    transform: scale(0.9);
+  }
+}

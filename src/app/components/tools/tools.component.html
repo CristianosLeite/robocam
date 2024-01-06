@@ -1,0 +1,39 @@
+<ng-template #content let-offcanvas>
+  <div class="offcanvas-header">
+    <h4 class="offcanvas-title">Filtrar Relatório</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="calendar">
+      <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+        outsideDays="hidden" />
+      <ng-template #t let-date let-focused="focused">
+        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+    <div class="inputs">
+      <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Matrícula</span>
+        <input type="text" class="form-control" aria-label="matricula" aria-describedby="inputGroup-sizing-lg">
+      </div>
+      <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Desenho motor</span>
+        <input type="text" class="form-control" aria-label="desenho motor" aria-describedby="inputGroup-sizing-lg">
+      </div>
+    </div>
+    <div class="text-end">
+      <button type="button" class="btn btn-outline-dark" (click)="offcanvas.close('Close click')">Filtrar</button>
+    </div>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openNoKeyboard(content)">
+  Opções de filtragem
+</button>
+<button class="btn btn-lg btn-outline-primary mb-2 me-2">
+  Exportar todos
+</button>
