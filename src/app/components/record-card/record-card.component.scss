@@ -1,11 +1,10 @@
 .card {
-  margin-left: 60px;
-  min-width: 350px;
+  margin: 40px;
 }
 
 @media screen and (max-width: 1400px) {
   .card {
-    transform: scale(0.8);
-    margin: auto;
+    margin-left: 6vw;
+    min-width: 5vw;
   }
 }

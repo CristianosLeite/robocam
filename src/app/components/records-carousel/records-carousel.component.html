@@ -5,15 +5,16 @@
     </svg>
   </i>
   <div class="content">
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
-    <app-record-card></app-record-card>
+    @for (record of records; track record.id) {
+      <app-record-card
+        [data]="record.data_hora_peca_1"
+        [matricula]="record.matricula"
+        [desenho_motor]="record.desenho_motor"
+        [local_peca_1]="record.local_peca_1"
+        [local_peca_2]="record.local_peca_2"
+        >
+      </app-record-card>
+  }
   </div>
   <i class="slide-button-right" (click)="onMousedown($event)" (click)="onMouseup()">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">

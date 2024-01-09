@@ -1,5 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { RecordCardComponent } from '../record-card/record-card.component';
+import { Record } from '../../interfaces/record.interface';
+import { ApiService } from '../../services/api-service.service';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-records-carousel',
@@ -11,8 +14,18 @@ import { RecordCardComponent } from '../record-card/record-card.component';
   styleUrl: './records-carousel.component.scss'
 })
 export class RecordsCarouselComponent {
+  private subscription: Subscription = new Subscription();
   private intervalId?: number;
+  records: Record[] = [];
 
+  @Input() dateRange: any;
+
+  constructor(private apiService: ApiService) {
+    this.apiService.recordsChanged.subscribe((records) => {
+      this.records = records;
+    });
+
+  }
 
   @HostListener('mousedown', ['$event'])
   onMousedown(event: MouseEvent) {
