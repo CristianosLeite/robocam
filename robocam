@@ -1,0 +1,19 @@
+FROM ubuntu:latest
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install -g --unsafe-perm node-red
+RUN apt-get install -y fswebcam
+RUN apt-get install -y postgresql postgresql-contrib
+USER postgres
+RUN /etc/init.d/postgresql start &&\
+    psql --command "CREATE USER postgresql WITH SUPERUSER PASSWORD 'postgresql';" &&\
+    createdb -O postgresql postgresql
+EXPOSE 1880
+EXPOSE 5432
+COPY start.sh /start.sh
+USER root
+RUN chmod +x /start.sh
+USER postgres
+CMD ["/start.sh"]

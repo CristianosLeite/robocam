@@ -1,8 +1,9 @@
-import { Component, TemplateRef, ViewEncapsulation, inject, Output, EventEmitter } from '@angular/core';
+import { Component, TemplateRef, ViewEncapsulation, inject, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDatepickerModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { DateRange } from '../../interfaces/date-range.interface';
+import { Filter } from '../../interfaces/filter.interface';
 
 @Component({
   selector: 'app-tools',
@@ -12,20 +13,28 @@ import { DateRange } from '../../interfaces/date-range.interface';
   styleUrl: './tools.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ToolsComponent {
+export class ToolsComponent implements OnChanges {
   calendar = inject(NgbCalendar);
   fromDate: NgbDate = this.calendar.getToday();
   toDate: NgbDate | null = this.calendar.getNext(this.fromDate, 'd', 10);
   hoveredDate: NgbDate | null = null;
+  matricula: string = '';
+  desenhoMotor: string = '';
 
   @Output() dateRange: EventEmitter<DateRange> = new EventEmitter<DateRange>();
-  @Output() matricula: EventEmitter<string> = new EventEmitter<string>();
-  @Output() desenho_motor: EventEmitter<string> = new EventEmitter<string>();
-  @Output() filterd: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() filterApplied: EventEmitter<Filter> = new EventEmitter<Filter>();
 
   private offcanvasService = inject(NgbOffcanvas);
 
   constructor() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.matricula);
+      this.filterApplied.emit({
+        matricula: this.matricula,
+        desenhoMotor: this.desenhoMotor,
+      });
+  }
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {

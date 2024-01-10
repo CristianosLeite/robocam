@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RecordsCarouselComponent } from '../../components/records-carousel/records-carousel.component';
 import { ToolsComponent } from '../../components/tools/tools.component';
 import { ApiService } from '../../services/api-service.service';
+import { DateRange } from '../../interfaces/date-range.interface';
+import { Filter } from '../../interfaces/filter.interface';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +14,7 @@ import { ApiService } from '../../services/api-service.service';
 })
 export class HomeComponent {
 
-
-  dateRange: any = {
+  dateRange: DateRange = {
     from: {
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
@@ -25,13 +26,13 @@ export class HomeComponent {
       day: new Date().getDate()
     },
   };
-  matricula: string = '';
+  filter = {} as Filter;
 
   constructor(private apiService: ApiService) {
     this.apiService.getAllRecords();
   }
 
-  filterRecords(dateRange: any, matricula?: string, desenho_motor?: string) {
-    this.apiService.filterRecords(dateRange, matricula, desenho_motor);
+  filterRecords(filter: Filter, DateRange: DateRange = this.dateRange) {
+    this.apiService.filterRecords(filter, DateRange);
   }
 }

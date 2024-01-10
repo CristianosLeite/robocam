@@ -18,17 +18,17 @@
     <div class="inputs">
       <div class="input-group input-group-lg">
         <span class="input-group-text" id="inputGroup-sizing-lg">Matrícula</span>
-        <input type="text" class="form-control" aria-label="matricula" aria-describedby="inputGroup-sizing-lg">
+        <input type="text" class="form-control" aria-label="matricula" aria-describedby="inputGroup-sizing-lg"
+          [(ngModel)]="matricula">
       </div>
       <div class="input-group input-group-lg">
         <span class="input-group-text" id="inputGroup-sizing-lg">Desenho motor</span>
-        <input type="text" class="form-control" aria-label="desenho motor" aria-describedby="inputGroup-sizing-lg">
+        <input type="text" class="form-control" aria-label="desenho motor" aria-describedby="inputGroup-sizing-lg"
+          [(ngModel)]="desenhoMotor">
       </div>
     </div>
     <div class="text-end">
-      <button type="button" class="btn btn-outline-dark"
-        (click)="filterd"
-        (click)="offcanvas.close('Close click')">Filtrar</button>
+      <button type="button" class="btn btn-outline-dark" (click)="filterApplied.emit()">Aplicar</button>
     </div>
   </div>
 </ng-template>

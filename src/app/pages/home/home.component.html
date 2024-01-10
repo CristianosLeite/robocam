@@ -1,4 +1,4 @@
 <div class="container-lg">
-  <app-tools (dateRange)="filterRecords($event)"></app-tools>
-  <app-records-carousel [dateRange]="dateRange"></app-records-carousel>
+  <app-tools (dateRange)="filterRecords(filter, $event)" (filterApplied)="filterRecords($event)"></app-tools>
+  <app-records-carousel></app-records-carousel>
 </div>
