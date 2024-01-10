@@ -2,14 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { jsPDF } from 'jspdf';
 import { ApiService } from '../../services/api-service.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-record-card',
   standalone: true,
   imports: [
     NgbCarouselModule,
-    DatePipe
+    DatePipe,
+    NgIf
   ],
   templateUrl: './record-card.component.html',
   styleUrl: './record-card.component.scss'

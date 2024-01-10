@@ -19,16 +19,17 @@
       <div class="input-group input-group-lg">
         <span class="input-group-text" id="inputGroup-sizing-lg">Matrícula</span>
         <input type="text" class="form-control" aria-label="matricula" aria-describedby="inputGroup-sizing-lg"
-          [(ngModel)]="matricula">
+          [(ngModel)]="filter.matricula">
       </div>
       <div class="input-group input-group-lg">
         <span class="input-group-text" id="inputGroup-sizing-lg">Desenho motor</span>
         <input type="text" class="form-control" aria-label="desenho motor" aria-describedby="inputGroup-sizing-lg"
-          [(ngModel)]="desenhoMotor">
+          [(ngModel)]="filter.desenhoMotor">
       </div>
     </div>
     <div class="text-end">
-      <button type="button" class="btn btn-outline-dark" (click)="filterApplied.emit()">Aplicar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="removeFilter()" *ngIf="isApplied">Remover filtros</button>
+      <button type="button" class="btn btn-outline-success" (click)="applyFilter()" *ngIf="!isApplied">Aplicar</button>
     </div>
   </div>
 </ng-template>

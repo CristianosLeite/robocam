@@ -4,6 +4,7 @@ import { ToolsComponent } from '../../components/tools/tools.component';
 import { ApiService } from '../../services/api-service.service';
 import { DateRange } from '../../interfaces/date-range.interface';
 import { Filter } from '../../interfaces/filter.interface';
+import { FilterApplied } from '../../interfaces/filterApplied.interafce';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,7 @@ export class HomeComponent {
     this.apiService.getAllRecords();
   }
 
-  filterRecords(filter: Filter, DateRange: DateRange = this.dateRange) {
-    this.apiService.filterRecords(filter, DateRange);
+  filterRecords(filterEvent: FilterApplied) {
+    this.apiService.filterRecords(filterEvent);
   }
 }

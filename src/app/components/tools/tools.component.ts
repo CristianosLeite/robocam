@@ -1,81 +1,98 @@
-import { Component, TemplateRef, ViewEncapsulation, inject, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+import { Component, TemplateRef, ViewEncapsulation, inject, Output, EventEmitter } from '@angular/core';
+import { JsonPipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDatepickerModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { DateRange } from '../../interfaces/date-range.interface';
 import { Filter } from '../../interfaces/filter.interface';
+import { FilterApplied } from '../../interfaces/filterApplied.interafce';
 
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [NgbDatepickerModule, FormsModule, JsonPipe],
+  imports: [NgbDatepickerModule, FormsModule, JsonPipe, NgIf],
   templateUrl: './tools.component.html',
   styleUrl: './tools.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ToolsComponent implements OnChanges {
+export class ToolsComponent {
   calendar = inject(NgbCalendar);
   fromDate: NgbDate = this.calendar.getToday();
-  toDate: NgbDate | null = this.calendar.getNext(this.fromDate, 'd', 10);
+  toDate: NgbDate | null = this.calendar.getToday();
   hoveredDate: NgbDate | null = null;
-  matricula: string = '';
-  desenhoMotor: string = '';
+  filter: Filter = {} as Filter;
+  dateRange = {
+    from: this.fromDate,
+    to: this.toDate
+  } as DateRange;
+  filterApplied = {} as FilterApplied;
+  isApplied: boolean = false;
 
-  @Output() dateRange: EventEmitter<DateRange> = new EventEmitter<DateRange>();
-  @Output() filterApplied: EventEmitter<Filter> = new EventEmitter<Filter>();
+  @Output() filterEvent: EventEmitter<FilterApplied> = new EventEmitter<FilterApplied>();
 
   private offcanvasService = inject(NgbOffcanvas);
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.matricula);
-      this.filterApplied.emit({
-        matricula: this.matricula,
-        desenhoMotor: this.desenhoMotor,
-      });
+  applyFilter(): void {
+    if (!this.filterApplied.dateRange) {
+      alert('Selecione um período de tempo');
+      return;
+    }
+
+    console.log(this.filter.matricula);
+    if (!this.filter.matricula && !this.filter.desenhoMotor) {
+      alert('informe um número de matícula ou desenho do motor');
+      return;
+    }
+
+    this.isApplied = true;
+    this.filterEvent.emit(this.filterApplied);
+  }
+
+  removeFilter() {
+    this.dateRange.from = this.fromDate;
+    this.dateRange.to = this.toDate;
+    this.filter.matricula = '';
+    this.filter.desenhoMotor = '';
+    this.isApplied = false;
+    this.filterEvent.emit();
   }
 
   onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate) || date.equals(this.fromDate)) {
-      this.toDate = date;
+    this.filterApplied = {
+      filter: this.filter,
+      dateRange: this.dateRange
+    }
+
+    if (!this.dateRange.from && !this.dateRange.to) {
+      this.dateRange.from = date;
+    } else if (this.dateRange.from && !this.dateRange.to && date.after(this.dateRange.from) || date.equals(this.dateRange.from)) {
+      this.dateRange.to = date;
     } else {
-      this.toDate = null;
-      this.fromDate = date;
+      this.dateRange.to = null;
+
+      this.dateRange.from = date;
     }
 
     if (this.fromDate && this.toDate) {
-      this.dateRange.emit({
-        from: {
-          year: this.fromDate.year,
-          month: this.fromDate.month,
-          day: this.fromDate.day,
-        },
-        to: {
-          year: this.toDate.year,
-          month: this.toDate.month,
-          day: this.toDate.day,
-        },
-      });
+      this.filterEvent.emit(this.filterApplied)
     }
   }
 
   isHovered(date: NgbDate) {
     return (
-      this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate)
+      this.dateRange.from && !this.dateRange.to && this.hoveredDate && date.after(this.dateRange.from) && date.before(this.hoveredDate)
     );
   }
 
   isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+    return this.dateRange.to && date.after(this.dateRange.from) && date.before(this.dateRange.to);
   }
 
   isRange(date: NgbDate) {
     return (
-      date.equals(this.fromDate) ||
-      (this.toDate && date.equals(this.toDate)) ||
+      date.equals(this.dateRange.from) ||
+      (this.toDate && date.equals(this.dateRange.to)) ||
       this.isInside(date) ||
       this.isHovered(date)
     );

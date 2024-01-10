@@ -8,5 +8,5 @@ export interface DateRange {
     year: number;
     month: number;
     day: number;
-  }
+  } | null;
 }
