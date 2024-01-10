@@ -36,6 +36,6 @@
     <h5 class="card-title">{{data | date: 'dd/MM/yyyy'}}</h5>
     <p class="card-text">Matrícula: {{matricula}}</p>
     <p class="card-text">Desenho do motor: {{desenho_motor}}</p>
-    <a class="btn btn-primary" (click)="generatePDF(matricula, desenho_motor, imagem_peca_1, imagem_peca_2)">Exportar relatório</a>
+    <a class="btn btn-primary" (click)="generatePDF(matricula, desenho_motor, data, imagem_peca_1, imagem_peca_2)">Exportar relatório</a>
   </div>
 </div>

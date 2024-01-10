@@ -5,6 +5,9 @@ import { NgbCalendar, NgbDate, NgbDatepickerModule, NgbOffcanvas } from '@ng-boo
 import { DateRange } from '../../interfaces/date-range.interface';
 import { Filter } from '../../interfaces/filter.interface';
 import { FilterApplied } from '../../interfaces/filterApplied.interafce';
+import { ApiService } from '../../services/api-service.service';
+import { PdfService } from '../../services/pdf.service';
+import { Record } from '../../interfaces/record.interface';
 
 @Component({
   selector: 'app-tools',
@@ -26,12 +29,32 @@ export class ToolsComponent {
   } as DateRange;
   filterApplied = {} as FilterApplied;
   isApplied: boolean = false;
+  records = [] as Record[];
 
   @Output() filterEvent: EventEmitter<FilterApplied> = new EventEmitter<FilterApplied>();
 
   private offcanvasService = inject(NgbOffcanvas);
 
-  constructor() { }
+  constructor(private apiService: ApiService, private pdfService: PdfService) {
+    this.apiService.recordsChanged.subscribe((records) => {
+      this.records = records;
+    });
+  }
+
+  generatePDF() {
+    let i = this.records.length;
+    for (let record of this.records) {
+      i--;
+      this.pdfService.generatePDF(
+        record.matricula,
+        record.desenho_motor,
+        record.data_hora_peca_1,
+        record.local_peca_1,
+        record.local_peca_2,
+        i > 0 ? true : false
+      );
+    }
+  }
 
   applyFilter(): void {
     if (!this.filterApplied.dateRange) {
@@ -39,7 +62,6 @@ export class ToolsComponent {
       return;
     }
 
-    console.log(this.filter.matricula);
     if (!this.filter.matricula && !this.filter.desenhoMotor) {
       alert('informe um número de matícula ou desenho do motor');
       return;

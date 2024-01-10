@@ -33,7 +33,7 @@ export class RecordCardComponent implements OnInit {
     this.imagem_peca_2 = (await this.apiService.getFile(this.local_peca_2)).data;
   }
 
-  generatePDF(matricula: string, desenho_motor: string, local_peca_1: string, local_peca_2?: string) {
-    this.pdfService.generatePDF(matricula, desenho_motor, local_peca_1, local_peca_2);
+  generatePDF(matricula: string, desenho_motor: string, data: string, local_peca_1: string, local_peca_2?: string) {
+    this.pdfService.generatePDF(matricula, desenho_motor, data, local_peca_1, local_peca_2);
   }
 }
