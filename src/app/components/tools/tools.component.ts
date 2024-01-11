@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewEncapsulation, inject, Output, EventEmitter } from '@angular/core';
-import { JsonPipe, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDatepickerModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { DateRange } from '../../interfaces/date-range.interface';
@@ -12,7 +12,7 @@ import { Record } from '../../interfaces/record.interface';
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [NgbDatepickerModule, FormsModule, JsonPipe, NgIf],
+  imports: [NgbDatepickerModule, FormsModule, JsonPipe, NgIf, AsyncPipe],
   templateUrl: './tools.component.html',
   styleUrl: './tools.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -41,20 +41,34 @@ export class ToolsComponent {
     });
   }
 
-  generatePDF() {
+  async generatePDF() {
     let i = this.records.length;
     for (let record of this.records) {
-      i--;
-      this.pdfService.generatePDF(
-        record.matricula,
-        record.desenho_motor,
-        record.data_hora_peca_1,
-        record.local_peca_1,
-        record.local_peca_2,
-        i > 0 ? true : false
-      );
+      try {
+
+        let img1 = (await this.apiService.getFile(record.local_peca_1)).data;
+        let img2 = (await this.apiService.getFile(record.local_peca_2)).data;
+
+        this.apiService.getFile(record.local_peca_2).then(data => {
+          console.log(data)
+        }).catch(error => {
+          console.log(error)
+        })
+        i--;
+        this.pdfService.generatePDF(
+          record.matricula,
+          record.desenho_motor,
+          record.data_hora_peca_1,
+          img1,
+          img2,
+          i > 0 ? true : false
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
+
 
   applyFilter(): void {
     if (!this.filterApplied.dateRange) {

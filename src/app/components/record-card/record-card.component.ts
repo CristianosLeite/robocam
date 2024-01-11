@@ -22,7 +22,7 @@ export class RecordCardComponent implements OnInit {
   @Input() local_peca_2: string = '';
   @Input() data: string = '';
 
-  imagem_peca_1: any;
+  imagem_peca_1: string = '';
   imagem_peca_2: string = '';
   peca: string = '';
 
