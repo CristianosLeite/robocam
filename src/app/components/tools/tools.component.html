@@ -37,6 +37,7 @@
 <button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="openNoKeyboard(content)">
   Opções de filtragem
 </button>
-<button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="generatePDF()">
+
+<button class="btn btn-lg btn-outline-primary mb-2 me-2" (click)="generatePDF()" *ngIf="solved">
   Exportar todos
 </button>

@@ -15,7 +15,7 @@
         <h3>{{ peca }}</h3>
       </div>
     </ng-template>
-    <ng-template ngbSlide>
+    <ng-template ngbSlide *ngIf="imagem_peca_2">
       <div class="picsum-img-wrapper">
         <img [src]="'data:image/jpeg;base64,' + imagem_peca_2" alt="Imagem peça maior" style="width: 100%; height: auto;"
           *ngIf="imagem_peca_2 !== '' " />
@@ -33,9 +33,9 @@
   </ngb-carousel>
 
   <div class="card-body">
-    <h5 class="card-title">{{data | date: 'dd/MM/yyyy'}}</h5>
+    <h5 class="card-title">{{data_hora_peca_1 | date: 'dd/MM/yyyy'}}</h5>
     <p class="card-text">Matrícula: {{matricula}}</p>
     <p class="card-text">Desenho do motor: {{desenho_motor}}</p>
-    <a class="btn btn-primary" (click)="generatePDF(matricula, desenho_motor, data, imagem_peca_1, imagem_peca_2)">Exportar relatório</a>
+    <a class="btn btn-primary" (click)="generatePDF(matricula, desenho_motor, data_hora_peca_1, data_hora_peca_2, imagem_peca_1, imagem_peca_2)">Exportar relatório</a>
   </div>
 </div>

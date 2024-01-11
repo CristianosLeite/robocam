@@ -22,6 +22,9 @@ export class RecordsCarouselComponent {
     this.apiService.recordsChanged.subscribe((records) => {
       this.records = records;
     });
+    this.subscription.add(interval(1000).subscribe(() => {
+      this.apiService.getAllRecords();
+    }));
   }
 
   @HostListener('mousedown', ['$event'])

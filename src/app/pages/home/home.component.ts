@@ -13,9 +13,7 @@ import { FilterApplied } from '../../interfaces/filterApplied.interafce';
 })
 export class HomeComponent {
 
-  constructor(private apiService: ApiService) {
-    this.apiService.getAllRecords();
-  }
+  constructor(private apiService: ApiService) {}
 
   filterRecords(filterEvent: FilterApplied) {
     this.apiService.filterRecords(filterEvent);

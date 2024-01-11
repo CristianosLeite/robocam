@@ -20,7 +20,8 @@ export class RecordCardComponent implements OnInit {
   @Input() desenho_motor: string = '';
   @Input() local_peca_1: string = '';
   @Input() local_peca_2: string = '';
-  @Input() data: string = '';
+  @Input() data_hora_peca_1: string = '';
+  @Input() data_hora_peca_2: string = '';
 
   imagem_peca_1: string = '';
   imagem_peca_2: string = '';
@@ -29,11 +30,15 @@ export class RecordCardComponent implements OnInit {
   constructor(private apiService: ApiService, private pdfService: PdfService) {}
 
   async ngOnInit() {
-    this.imagem_peca_1 = (await this.apiService.getFile(this.local_peca_1)).data;
-    this.imagem_peca_2 = (await this.apiService.getFile(this.local_peca_2)).data;
+    this.apiService.getFile(this.local_peca_1).subscribe((data) => {
+      this.imagem_peca_1 = data.data;
+    });
+    this.apiService.getFile(this.local_peca_2).subscribe((data) => {
+      this.imagem_peca_2 = data.data;
+    });
   }
 
-  generatePDF(matricula: string, desenho_motor: string, data: string, local_peca_1: string, local_peca_2?: string) {
-    this.pdfService.generatePDF(matricula, desenho_motor, data, local_peca_1, local_peca_2);
+  generatePDF(matricula: string, desenho_motor: string, data_hora_peca_1: string, data_hora_peca_2: string, imagem_peca_1: string, imagem_peca_2?: string) {
+    this.pdfService.generatePDF(matricula, desenho_motor, data_hora_peca_1, data_hora_peca_2, imagem_peca_1, imagem_peca_2);
   }
 }

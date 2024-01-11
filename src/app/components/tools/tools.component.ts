@@ -30,6 +30,8 @@ export class ToolsComponent {
   filterApplied = {} as FilterApplied;
   isApplied: boolean = false;
   records = [] as Record[];
+  images = [] as any[];
+  solved = false;
 
   @Output() filterEvent: EventEmitter<FilterApplied> = new EventEmitter<FilterApplied>();
 
@@ -38,27 +40,49 @@ export class ToolsComponent {
   constructor(private apiService: ApiService, private pdfService: PdfService) {
     this.apiService.recordsChanged.subscribe((records) => {
       this.records = records;
+      this.getImages();
     });
   }
 
-  async generatePDF() {
-    let i = this.records.length;
+  getImages() {
     for (let record of this.records) {
+      this.apiService.getFile(record.local_peca_1).subscribe({
+        next: (image) => {
+          this.images.push(record.id, image.data);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+    }
+  }
+
+  generatePDF() {
+    let i = this.records.length;
+    let img1 = '';
+    let img2 = '';
+    for (let record of this.records) {
+      for (let image of this.images) {
+        if (image.id === record.id) {
+          img1 = image.data;
+        }
+      }
       try {
-
-        let img1 = (await this.apiService.getFile(record.local_peca_1)).data;
-        let img2 = (await this.apiService.getFile(record.local_peca_2)).data;
-
-        this.apiService.getFile(record.local_peca_2).then(data => {
-          console.log(data)
-        }).catch(error => {
-          console.log(error)
-        })
+        this.apiService.getFile(record.local_peca_2)
+          .subscribe({
+            next: (data) => {
+              console.log(data)
+            },
+            error: (error) => {
+              console.log('asdfasdf: ' + error);
+            }
+          });
         i--;
         this.pdfService.generatePDF(
           record.matricula,
           record.desenho_motor,
           record.data_hora_peca_1,
+          record.data_hora_peca_2,
           img1,
           img2,
           i > 0 ? true : false
@@ -68,7 +92,6 @@ export class ToolsComponent {
       }
     }
   }
-
 
   applyFilter(): void {
     if (!this.filterApplied.dateRange) {
