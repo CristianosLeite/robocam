@@ -20,13 +20,13 @@ export class ApiService {
   }
 
   async getAllRecords(): Promise<void> {
-    await lastValueFrom(this.http.get<Record[]>('http://172.18.172.165:1880/node/get/records/all')).then((records) => {
+    await lastValueFrom(this.http.get<Record[]>('http://172.18.176.165:1880/node/get/records/all')).then((records) => {
       this.records = records;
     });
   }
 
   public getFile(pathFile: string): Observable<Image> {
-    return this.http.post<Image>('http://172.18.172:1880/node/get/file', { path: `${pathFile.replaceAll('&#x2F;', '/')}` });
+    return this.http.post<Image>('http://172.18.176:1880/node/get/file', { path: `${pathFile.replaceAll('&#x2F;', '/')}` });
   }
 
   public filterRecords(filterEvent: FilterApplied) {
