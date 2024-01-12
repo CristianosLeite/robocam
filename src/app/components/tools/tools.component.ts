@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewEncapsulation, inject, Output, EventEmitter } from '@angular/core';
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbCalendar, NgbDate, NgbDatepickerModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { DateRange } from '../../interfaces/date-range.interface';
@@ -12,7 +12,7 @@ import { Record } from '../../interfaces/record.interface';
 @Component({
   selector: 'app-tools',
   standalone: true,
-  imports: [NgbDatepickerModule, FormsModule, JsonPipe, NgIf, AsyncPipe],
+  imports: [NgbDatepickerModule, FormsModule, JsonPipe, NgIf],
   templateUrl: './tools.component.html',
   styleUrl: './tools.component.scss',
   encapsulation: ViewEncapsulation.None,
