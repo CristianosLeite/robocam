@@ -13,7 +13,7 @@ export class PdfService {
   generatePDF(matricula: string, desenho_motor: string, data_hora_peca_1: string, data_hora_peca_2: string, imagem_peca_1: string, imagem_peca_2?: string, multiple: boolean = false) {
     // Add images
 
-    const template = imagem_peca_2 ? "../../assets/images/template1_pdf.jpg" : "../../assets/images/template2_pdf.jpg";
+    const template = imagem_peca_2 ? "./assets/images/template1_pdf.jpg" : "./assets/images/template2_pdf.jpg";
 
     // Assuming images are 90px x 70px
     this.pdf.setFontSize(12);
