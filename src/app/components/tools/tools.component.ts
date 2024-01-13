@@ -46,14 +46,17 @@ export class ToolsComponent {
 
   getImages() {
     for (let record of this.records) {
-      this.apiService.getFile(record.local_peca_1).subscribe({
-        next: (image) => {
-          this.images.push(record.id, image.data);
+      this.apiService.getFile(record.local_peca_1).then(
+        (data) => {
+          this.images.push({
+            id: record.id,
+            data: data
+          });
         },
-        error: (error) => {
+        (error) => {
           console.log(error);
         }
-      });
+      )
     }
   }
 
@@ -68,15 +71,14 @@ export class ToolsComponent {
         }
       }
       try {
-        this.apiService.getFile(record.local_peca_2)
-          .subscribe({
-            next: (data) => {
-              console.log(data)
-            },
-            error: (error) => {
-              console.log('asdfasdf: ' + error);
-            }
-          });
+        this.apiService.getFile(record.local_peca_2).then(
+          (image) => {
+            img2 = image.data;
+          },
+          (error) => {
+            console.log(error);
+          }
+        )
         i--;
         this.pdfService.generatePDF(
           record.matricula,

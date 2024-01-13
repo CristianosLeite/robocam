@@ -30,10 +30,10 @@ export class RecordCardComponent implements OnInit {
   constructor(private apiService: ApiService, private pdfService: PdfService) {}
 
   async ngOnInit() {
-    this.apiService.getFile(this.local_peca_1).subscribe((data) => {
+    this.apiService.getFile(this.local_peca_1).then((data) => {
       this.imagem_peca_1 = data.data;
     });
-    this.apiService.getFile(this.local_peca_2).subscribe((data) => {
+    this.apiService.getFile(this.local_peca_2).then((data) => {
       this.imagem_peca_2 = data.data;
     });
   }
