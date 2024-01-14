@@ -38,6 +38,8 @@ export class ApiService {
       return;
     }
 
+    this.filtered = true;
+
     if (Object.keys(filterEvent.filter).length === 0) {
       this.recordsChanged.emit(this.filterRecordsByDate(filterEvent.dateRange, this.records));
       return;
@@ -50,8 +52,6 @@ export class ApiService {
     } else {
       this.recordsChanged.emit(this.filterRecordsByDate(filterEvent.dateRange, this.records));
     }
-
-    this.filtered = true;
   }
 
   private filterRecordsByDate(dateRange: DateRange, records: Record[]): Record[] {
