@@ -20,12 +20,13 @@ export class RecordCardComponent implements OnInit {
   @Input() desenho_motor: string = '';
   @Input() local_peca_1: string = '';
   @Input() local_peca_2: string = '';
+  @Input() peca_1: string = '';
+  @Input() peca_2: string = '';
   @Input() data_hora_peca_1: string = '';
   @Input() data_hora_peca_2: string = '';
 
   imagem_peca_1: string = '';
   imagem_peca_2: string = '';
-  peca: string = '';
 
   constructor(private apiService: ApiService, private pdfService: PdfService) {}
 
@@ -38,7 +39,7 @@ export class RecordCardComponent implements OnInit {
     });
   }
 
-  generatePDF(matricula: string, desenho_motor: string, data_hora_peca_1: string, data_hora_peca_2: string, imagem_peca_1: string, imagem_peca_2?: string) {
-    this.pdfService.generatePDF(matricula, desenho_motor, data_hora_peca_1, data_hora_peca_2, imagem_peca_1, imagem_peca_2);
+  generatePDF(matricula: string, desenho_motor: string, data_hora_peca_1: string, data_hora_peca_2: string, peca_1: string, peca_2: string, imagem_peca_1: string, imagem_peca_2?: string) {
+    this.pdfService.generatePDF(matricula, desenho_motor, data_hora_peca_1, data_hora_peca_2, peca_1, peca_2, imagem_peca_1, imagem_peca_2);
   }
 }

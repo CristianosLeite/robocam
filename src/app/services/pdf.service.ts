@@ -10,7 +10,7 @@ export class PdfService {
 
   constructor() { }
 
-  generatePDF(matricula: string, desenho_motor: string, data_hora_peca_1: string, data_hora_peca_2: string, imagem_peca_1: string, imagem_peca_2?: string, multiple: boolean = false) {
+  generatePDF(matricula: string, desenho_motor: string, data_hora_peca_1: string, data_hora_peca_2: string, peca_1: string, peca_2: string, imagem_peca_1: string, imagem_peca_2?: string, multiple: boolean = false) {
     // Add images
 
     const template = imagem_peca_2 ? "./assets/images/template1_pdf.jpg" : "./assets/images/template2_pdf.jpg";
@@ -26,13 +26,14 @@ export class PdfService {
       this.pdf.text(data_hora_peca_1, 110, 164);
       this.pdf.text(data_hora_peca_2, 110, 269);
       this.pdf.text('OPERAÇÃO', 22, 238.5);
-      this.pdf.text('TAMPA PEQUENA', 22, 247.5);
+      this.pdf.text(peca_1, 22, 247.5);
       this.pdf.text('TAMPA 336', 22, 256.5);
     } else {
       this.pdf.addImage(imagem_peca_1, 'JPEG', 82.8, 110.2, 107, 80);
       this.pdf.text(data_hora_peca_1, 110, 198);
       this.pdf.text('OPERAÇÃO', 22, 238.5);
-      this.pdf.text('TAMPA PEQUENA', 22, 247.5);
+      this.pdf.text(peca_1, 22, 247.5);
+      this.pdf.text(peca_2, 22, 258.5);
     }
 
     if (multiple) {

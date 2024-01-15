@@ -2,7 +2,7 @@
   <ngb-carousel>
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
-        <img [src]="'data:image/jpeg;base64,' + imagem_peca_1" alt="Imagem peça menor" style="width: 100%; height: auto;"
+        <img [src]="'data:image/jpeg;base64,' + imagem_peca_1" alt="Imagem peça menor" style="width: 100%"
           *ngIf="imagem_peca_1 !== '' "/>
         <svg xmlns="http://www.w3.org/2000/svg" width="320" height="240" fill="currentColor" class="bi bi-card-image"
           viewBox="0 0 16 16" *ngIf="imagem_peca_1 === '' ">
@@ -12,7 +12,7 @@
         </svg>
       </div>
       <div class="carousel-caption">
-        <h3>{{ peca }}</h3>
+        <h3>{{ peca_1 }}</h3>
       </div>
     </ng-template>
     <ng-template ngbSlide *ngIf="imagem_peca_2">
@@ -27,7 +27,7 @@
         </svg>
       </div>
       <div class="carousel-caption">
-        <h3>{{ peca }}</h3>
+        <h3>{{ peca_2 }}</h3>
       </div>
     </ng-template>
   </ngb-carousel>
@@ -36,6 +36,6 @@
     <h5 class="card-title">{{data_hora_peca_1 | date: 'dd/MM/yyyy'}}</h5>
     <p class="card-text">Matrícula: {{matricula}}</p>
     <p class="card-text">Desenho do motor: {{desenho_motor}}</p>
-    <a class="btn btn-primary" (click)="generatePDF(matricula, desenho_motor, data_hora_peca_1, data_hora_peca_2, imagem_peca_1, imagem_peca_2)">Exportar relatório</a>
+    <a class="btn btn-primary" (click)="generatePDF(matricula, desenho_motor, data_hora_peca_1, data_hora_peca_2, peca_1, peca_2, imagem_peca_2)">Exportar relatório</a>
   </div>
 </div>
