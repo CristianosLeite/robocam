@@ -9,6 +9,8 @@
   <div class="content">
     @for (record of records; track record.id) {
       <app-record-card
+        [peca_1]="record.peca_1"
+        [peca_2]="record.peca_2"
         [data_hora_peca_1]="record.data_hora_peca_1"
         [data_hora_peca_2]="record.data_hora_peca_2"
         [matricula]="record.matricula"
