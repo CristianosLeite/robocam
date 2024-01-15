@@ -136,6 +136,7 @@ export class ToolsComponent {
     }
 
     if (this.fromDate && this.toDate) {
+      this.isApplied = true;
       this.filterEvent.emit(this.filterApplied)
     }
   }
