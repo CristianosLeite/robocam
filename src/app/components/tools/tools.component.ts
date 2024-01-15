@@ -61,38 +61,7 @@ export class ToolsComponent {
   }
 
   generatePDF() {
-    let i = this.records.length;
-    let img1 = '';
-    let img2 = '';
-    for (let record of this.records) {
-      for (let image of this.images) {
-        if (image.id === record.id) {
-          img1 = image.data;
-        }
-      }
-      try {
-        this.apiService.getFile(record.local_peca_2).then(
-          (image) => {
-            img2 = image.data;
-          },
-          (error) => {
-            console.log(error);
-          }
-        )
-        i--;
-        this.pdfService.generatePDF(
-          record.matricula,
-          record.desenho_motor,
-          record.data_hora_peca_1,
-          record.data_hora_peca_2,
-          img1,
-          img2,
-          i > 0 ? true : false
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    }
+
   }
 
   applyFilter(): void {

@@ -1,26 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RecordsCarouselComponent } from '../../components/records-carousel/records-carousel.component';
+import { ToolsComponent } from '../../components/tools/tools.component';
 import { ApiService } from '../../services/api-service.service';
 import { FilterApplied } from '../../interfaces/filterApplied.interafce';
-import { RecordCardComponent } from '../../components/record-card/record-card.component';
-import { Record } from '../../interfaces/record.interface';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RecordCardComponent],
+  imports: [RecordsCarouselComponent, ToolsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
-  records = [] as Record[];
+export class HomeComponent {
 
   constructor(private apiService: ApiService) {}
-
-  ngOnInit(): void {
-    this.apiService.recordsChanged.subscribe((records) => {
-      this.records = records;
-    });
-  }
 
   filterRecords(filterEvent: FilterApplied) {
     this.apiService.filterRecords(filterEvent);
