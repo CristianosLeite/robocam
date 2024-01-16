@@ -13,7 +13,7 @@ export class ApiService {
   @Output() recordsChanged: EventEmitter<Record[]> = new EventEmitter<Record[]>();
   records: Record[] = [];
   filtered: boolean = false;
-  baseUrl: string = isDevMode() ? 'http://localhost:1881' : 'http://172.18.176.234:1880';
+  baseUrl = 'http://172.18.176.234:1880';
 
   constructor(private http: HttpClient) {
     this.getAllRecords()

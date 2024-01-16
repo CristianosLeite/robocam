@@ -1,13 +1,14 @@
 .card {
   margin: 40px;
   flex-flow: row;
+  min-height: 500px;
+  min-width: 900px;
 }
 
 .picsum-img-wrapper {
-  min-height: 200px;
-  min-width: 600px;
+  min-height: 500px;
+  min-width: 900px;
 }
-
 
 svg {
   width: 100%;
