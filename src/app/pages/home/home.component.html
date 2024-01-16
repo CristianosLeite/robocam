@@ -1,4 +1,12 @@
 <div class="container-lg">
-  <app-tools (filterEvent)="filterRecords($event)"></app-tools>
-  <app-records-carousel></app-records-carousel>
+  <app-record-card *ngIf="records.length > 0"
+  [peca_1]="records[0].peca_1"
+  [peca_2]="records[0].peca_2"
+  [local_peca_1]="records[0].local_peca_1"
+  [local_peca_2]="records[0].local_peca_2"
+  [matricula]="records[0].matricula"
+  [desenho_motor]="records[0].desenho_motor"
+  [data_hora_peca_1]="records[0].data_hora_peca_1"
+  [data_hora_peca_2]="records[0].data_hora_peca_2"
+  ></app-record-card>
 </div>

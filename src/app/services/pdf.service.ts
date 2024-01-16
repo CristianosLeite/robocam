@@ -30,6 +30,7 @@ export class PdfService {
       this.pdf.text(peca_2, 22, 256.5);
     } else {
       this.pdf.addImage(imagem_peca_1, 'JPEG', 82.8, 110.2, 107, 80);
+      console.log(imagem_peca_1);
       this.pdf.text(data_hora_peca_1, 110, 198);
       this.pdf.text('OPERAÇÃO', 22, 238.5);
       this.pdf.text(peca_1, 22, 247.5);

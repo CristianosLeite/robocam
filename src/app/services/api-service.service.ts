@@ -13,7 +13,7 @@ export class ApiService {
   @Output() recordsChanged: EventEmitter<Record[]> = new EventEmitter<Record[]>();
   records: Record[] = [];
   filtered: boolean = false;
-  baseUrl: string = isDevMode() ? 'http://localhost:1880' : 'http://172.18.176.165:1880';
+  baseUrl: string = isDevMode() ? 'http://localhost:1881' : 'http://172.18.176.234:1880';
 
   constructor(private http: HttpClient) {
     this.getAllRecords()
@@ -28,7 +28,7 @@ export class ApiService {
   }
 
   public async getFile(pathFile: string): Promise<Image> {
-    return await lastValueFrom(this.http.post<Image>(`${this.baseUrl}/node/get/file`, { path: `${pathFile.replaceAll('&#x2F;', '/')}` }));
+    return await lastValueFrom(this.http.post<Image>(`${this.baseUrl}/node/get/file`, { path: `${pathFile.replaceAll('&#x2F;', '/')}.bmp` }));
   }
 
   public filterRecords(filterEvent: FilterApplied) {
