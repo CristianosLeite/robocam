@@ -13,10 +13,10 @@ export class ApiService {
   @Output() recordsChanged: EventEmitter<Record[]> = new EventEmitter<Record[]>();
   records: Record[] = [];
   filtered: boolean = false;
-  baseUrl = 'http://172.18.176.234:1880';
+  baseUrl = isDevMode() ? 'http://localhost:1881' : 'http://172.18.176.234:1880';
 
   constructor(private http: HttpClient) {
-    this.getAllRecords()
+    this.getAllRecords();
   }
 
   async getAllRecords(): Promise<void> {

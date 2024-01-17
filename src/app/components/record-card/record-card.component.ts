@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../services/api-service.service';
 import { DatePipe, NgIf } from '@angular/common';
@@ -15,7 +15,7 @@ import { PdfService } from '../../services/pdf.service';
   templateUrl: './record-card.component.html',
   styleUrl: './record-card.component.scss'
 })
-export class RecordCardComponent implements OnInit {
+export class RecordCardComponent implements OnChanges {
   @Input() matricula: string = '';
   @Input() desenho_motor: string = '';
   @Input() local_peca_1: string = '';
@@ -30,14 +30,18 @@ export class RecordCardComponent implements OnInit {
 
   constructor(private apiService: ApiService, private pdfService: PdfService) {}
 
-  async ngOnInit() {
-    this.apiService.getFile(this.local_peca_1).then((data) => {
-      this.imagem_peca_1 = data.data;
-    });
-    if (this.local_peca_2) {
-      this.apiService.getFile(this.local_peca_2).then((data) => {
-        this.imagem_peca_2 = data.data;
-      });
+  ngOnChanges(changes: SimpleChanges) {
+    for (let propName in changes) {
+      let change = changes[propName];
+      if (propName === 'local_peca_1') {
+        this.apiService.getFile(change.currentValue).then((data) => {
+          this.imagem_peca_1 = data.data;
+        });
+      } else if (propName === 'local_peca_2') {
+        this.apiService.getFile(change.currentValue).then((data) => {
+          this.imagem_peca_2 = data.data;
+        });
+      }
     }
   }
 
